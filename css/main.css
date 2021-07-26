@@ -1,0 +1,57 @@
+
+    body {
+      text-align: center;
+      background-color: #eeeeee;
+    }
+
+    label {
+      display: block;
+    }
+
+    h1 {
+      text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 6px;
+      font-size: 40px;
+      color: #000000;
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+    }
+
+    input[type="color"] {
+      border: none;
+      background-color: transparent;
+      width: 55px;
+      height: 55px;
+      padding: 0;
+      margin-bottom: 15px;
+    }
+
+    input[type="color"]:hover {
+      cursor: pointer;
+    }
+
+    textarea {
+      width: 100%;
+      resize: none;
+      margin-bottom: 15px;
+      max-width: 300px;
+      font-size: 13px;
+    }
+
+    .card {
+      height: 100%;
+    }
+
+    .card-header {
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    .row>div {
+      margin-bottom: 15px;
+    }
