@@ -5,7 +5,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script src="js/jquery-3.6.0.min.js"></script>
+  <script src="js/main.js"></script>
   <title>Text shadow generator</title>
   <style>
 
@@ -70,23 +72,8 @@
 
 <body>
   <div class="container">
-    <div class="text-shadow-generator">
-      <h1 class="example">text-shadow generator</h1>
-      <label for="offset_x">Смещение по оси x</label>
-      <input id="offset_x" type="range" min="-15" max="15" step="1" value="4">
-      <label for="offset_y">Смещение по оси y</label>
-      <input id="offset_y" type="range" min="-15" max="15" step="1" value="-1">
-      <label for="blur">Размытие</label>
-      <input id="blur" type="range" min="0" max="15" step="1" value="0">
-      <label for="color">Цвет</label>
-      <input type="color" value="#ff0000">
-      <label for="opacity">Прозрачность</label>
-      <input id="opacity" type="range" min="0" max="1" step="0.01" value="1">
-      <label for="result">Результат</label>
-      <textarea id="result" readonly></textarea>
-    </div>
-    <!-- <div class="row text-shadow-generator">
-      <h1 class="example">text-shadow generator</h1>
+    <h1>Text shadow generator</h1>
+    <div class="row">
       <div class="col-xl-4 col-md-6">
         <div class="card">
           <div class="card-header bg-primary">Settings:</div>
@@ -106,9 +93,9 @@
         <div class="card">
           <div class="card-header bg-primary">Color:</div>
           <div class="card-body">
-            <input type="color" value="#ff0000" name="" id="">
+            <input type="color" value="#ff0000">
             <label for="opacity">Opacity</label>
-            <input type="range" class="col-12" class="custom-range" name="" id="opacity" min="0" max="1" step="0.01" value="1">
+            <input type="range" class="col-12" class="custom-range" id="opacity" min="0" max="1" step="0.01" value="1">
           </div>
         </div>
       </div>
@@ -116,116 +103,15 @@
         <div class="card">
           <div class="card-header bg-primary">Result:</div>
           <div class="card-body">
-            <label for="result">Color in Hex</label>
-            <textarea name="" id="result" rows="4" readonly></textarea><br>
+            <label for="resultHex">Color in Hex</label>
+            <textarea id="resultHex" rows="4" readonly></textarea><br>
             <label for="resultRgba">Color in RGBA</label>
-            <textarea name="" id="resultRgba" rows="3" readonly></textarea><br>
+            <textarea id="resultRgba" rows="3" readonly></textarea><br>
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
   </div>
-  <script type="text/javascript" src="jquery-3.6.0.min.js"></script>
-  <script>
-    function tsxtShadow({
-      offset_x,
-      offset_y,
-      blur,
-      color,
-      rgba
-    }) {
-      /*Функция для создания тени*/
-      let cssStyles = offset_x + 'px ' + offset_y + 'px ' + blur + 'px ' + rgba
-      document.querySelector('.example').style.textShadow = cssStyles
-      document.querySelector('.text-shadow-generator #result').value = 'text-shadow: ' + offset_x + 'px ' + offset_y + 'px ' + blur + 'px ' + color + '; /* Цвет в HEX*/\ntext-shadow: ' + cssStyles + '; /* Цвет в RGBA*/'
-    }
-
-    tsxtShadow({
-      /*Вызов функции со значениями по умолчанию*/
-      offset_x: 4,
-      offset_y: -1,
-      blur: 0,
-      opacity: 1,
-      color: '#ff0000',
-      rgba: 'rgba(255, 0, 0, 1)'
-    });
-
-    for (let item of document.querySelectorAll('.text-shadow-generator input')) {
-      item.addEventListener('input', function (e) {
-        let offset_x = document.querySelector('.text-shadow-generator #offset_x').value; //Смещение по x
-        let offset_y = document.querySelector('.text-shadow-generator #offset_y').value; //Смещение по y
-        let blur = document.querySelector('.text-shadow-generator #blur').value; //Размытие
-        let opacity = document.querySelector('.text-shadow-generator #opacity').value; //Прозрачность
-        let color = document.querySelector('.text-shadow-generator input[type="color"]').value + ''; //Цвет
-        let red16 = color[1] + '' + color[2]; //Доля красного цвета в 16 системе
-        let green16 = color[3] + '' + color[4]; //Доля зеленого цвета в 16 системе
-        let blue16 = color[5] + '' + color[6]; //Доля синего цвета в 16 системе
-        let red10 = parseInt(red16, 16); //Доля красного цвета в 10 системе
-        let green10 = parseInt(green16, 16); //Доля зеленого цвета в 10 системе
-        let blue10 = parseInt(blue16, 16); //Доля синего цвета в 10 системе
-        let rgba = 'rgba(' + red10 + ', ' + green10 + ', ' + blue10 + ', ' + opacity + ')';
-
-        tsxtShadow({
-          /*Вызвать функцию с новыми параметрами*/
-          offset_x: offset_x,
-          offset_y: offset_y,
-          blur: blur,
-          opacity: opacity,
-          color: color,
-          rgba: rgba
-        });
-      })
-    }
-    // function cssShadow({
-    //   font_size,
-    //   offset_x,
-    //   offset_y,
-    //   blur,
-    //   opacity,
-    //   color,
-    //   rgba
-    // }) {
-    //   let cssStyles = offset_x + 'px ' + offset_y + 'px ' + blur + 'px ' + rgba;
-    //   $('h1').css('text-shadow', cssStyles);
-    //   $('#resultHex').val('background-color: ' + color + ';\nopacity: ' + opacity + '\nfont-size: ' + font_size + 'px;');
-    //   $('#resultRgba').val('text-shadow: ' offset_x + 'px ' + offset_y + 'px ' + blur + 'px ' + rgba + '\nfont-size: ' + font_size + 'px;');
-    // }
-    // cssShadow({
-    //   font_size: 40,
-    //   offset_x: 4,
-    //   offset_y: 1,
-    //   blur: 0,
-    //   opacity: 1,
-    //   color: '#ff0000',
-    //   rgba: 'rgba(255,0,0,1)',
-    // });
-    // $(document).on('input change', 'input', function () {
-    //   let font_size = $('#font_size').val();
-    //   let offset_x = $('#offset_x').val();
-    //   let offset_y = $('#offset_y').val();
-    //   let blur = $('#blur').val();
-    //   let opacity = $('#opacity').val();
-    //   let color = $('input[type="color"]').val() + '';
-    //   let red16 = color[1] + '' + color[2];
-    //   let green16 = color[3] + '' + color[4];
-    //   let blue16 = color[5] + '' + color[6];
-    //   let red10 = parseInt(red16, 16);
-    //   let green10 = parseInt(green16, 16);
-    //   let blue10 = parseInt(blue16, 16);
-    //   let rgba = 'rgba(' + red10 + ',' + green10 + ',' + blue10 + ',' + opacity + ')';
-
-    //   $('h1').css('fontSize', font_size + 'px');
-    //   cssShadow({
-    //     font_size: font_size,
-    //     offset_x: offset_x,
-    //     offset_y: offset_y,
-    //     blur: blur,
-    //     opacity: opacity,
-    //     color: color,
-    //     rgba: rgba
-    //   })
-    // })
-  </script>
 </body>
 
 </html>
